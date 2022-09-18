@@ -22,13 +22,7 @@ export default function Home() {
   useEffect(() => {
     let temp = tempData;
 
-    if (isFilterCategory && isJewelery)
-      setData(
-        temp.filter(
-          (e) => e.category == "men's clothing" || e.category == "jewelery"
-        )
-      );
-    else if (isFilterCategory)
+    if (isFilterCategory)
       setData(temp.filter((e) => e.category == "men's clothing"));
     else setData(tempData);
   }, [isFilterCategory]);
@@ -94,11 +88,11 @@ export default function Home() {
         data={data}
         cart={cart}
         addToCart={addToCart}
-        removeToCart={removeFromCart}
+        removeFromCart={removeFromCart}
       />
       <div className="flex justify-between ">
         <Checkbox
-          label={"Men"}
+          label={"Men's clothing"}
           onClickCategory={() => {
             setIsFilterCategory(!isFilterCategory);
           }}

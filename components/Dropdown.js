@@ -4,9 +4,11 @@ import { Popover } from "@headlessui/react";
 
 export default function Dropdown({ data, cart, addToCart, removeFromCart }) {
   const [total, setTotal] = useState(0);
+  const [updateAmount, setUpdateAmount] = useState(0);
 
   useEffect(() => {
     totalPrice()
+    totalAmount()
   }, [cart]);
 
   const getItem = (id) => {
@@ -14,12 +16,23 @@ export default function Dropdown({ data, cart, addToCart, removeFromCart }) {
   };
 
   const totalPrice = () => {
-    let sum = 0;
+    let sumPrice = 0;
     cart.forEach((item) => {
-      sum += getItem(item.id).price * item.amount
+      sumPrice += getItem(item.id).price * item.amount
+      sumPrice.toFixed(2).replace(/0+$/, '');
     })
-    setTotal(sum)
+    setTotal(sumPrice)
   }
+
+  const totalAmount = () => {
+    let sumAmount = 0;
+    cart.forEach((item) => {
+      sumAmount += getItem(item.id).amount
+      sumAmount
+    })
+    setUpdateAmount(sumAmount)
+  }
+
   return (
     <Popover className="relative">
       <Popover.Button>
@@ -32,7 +45,7 @@ export default function Dropdown({ data, cart, addToCart, removeFromCart }) {
         </div>
       </Popover.Button>
       <div className="absolute bottom-0 right-[-20px] w-8 h-8 flex text-center justify-center items-center bg-gray-50 rounded-full">
-        <div className="text-md font-bold">0</div>
+        <div className="text-md font-bold">{updateAmount}</div>
       </div>
 
       <Popover.Panel className="w-[300px] bg-white absolute right-0 z-10 mt-3">
