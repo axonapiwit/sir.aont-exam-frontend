@@ -62,7 +62,7 @@ export default function Dropdown({ data, cart, addToCart, removeFromCart }) {
             </div>
           ))}
           <div className="flex justify-between p-2">
-            <div className="font-bold">Clear</div>
+            <div className="font-bold">Total</div>
             <div className="font-bold">${total}</div>
           </div>
         </div>
