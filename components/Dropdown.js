@@ -1,8 +1,25 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Popover } from "@headlessui/react";
 
-export default function Dropdown({ onClickCategory }) {
+export default function Dropdown({ data, cart, addToCart, removeFromCart }) {
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    totalPrice()
+  }, [cart]);
+
+  const getItem = (id) => {
+    return data.find((e) => e.id == id);
+  };
+
+  const totalPrice = () => {
+    let sum = 0;
+    cart.forEach((item) => {
+      sum += getItem(item.id).price * item.amount
+    })
+    setTotal(sum)
+  }
   return (
     <Popover className="relative">
       <Popover.Button>
@@ -14,16 +31,42 @@ export default function Dropdown({ onClickCategory }) {
           />
         </div>
       </Popover.Button>
-        <div className="absolute bottom-0 right-[-20px] w-8 h-8 flex text-center justify-center items-center bg-gray-50 rounded-full">
-          <p className="text-md font-bold">0</p>
-        </div>
+      <div className="absolute bottom-0 right-[-20px] w-8 h-8 flex text-center justify-center items-center bg-gray-50 rounded-full">
+        <div className="text-md font-bold">0</div>
+      </div>
 
-      <Popover.Panel className="absolute left-1/2 z-10 mt-3 w-[200px] -translate-x-1/2 transform px-4">
+      <Popover.Panel className="w-[300px] bg-white absolute right-0 z-10 mt-3">
         <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-          <div className="relative grid gap-8 bg-white p-7 lg:grid-cols-2">
+          {cart.map((item, i) => (
+            <div className="grid grid-cols-3 gap-1" key={i} >
+              <div className="flex p-2">
+                <img
+                  src={getItem(item.id).image}
+                  alt=""
+                  className="w-20 h-20 object-contain"
+                />
+              </div>
+              <div className="flex flex-col justify-between p-2">
+                <div className="truncate">{getItem(item.id).title}</div>
+                <div className="flex justify-between">
+                  <button onClick={() => { removeFromCart(item.id) }} className="cursor-pointer">-</button>
+                  <div className="">{item.amount}</div>
+                  <button onClick={() => { addToCart(item.id) }} className="cursor-pointer">+</button>
+                </div>
+              </div>
+              <div className="flex flex-col justify-between p-2">
+                <button onClick={() => { removeFromCart(item.id) }} className="text-red-500 font-bold">Delete</button>
+                <div className="font-bold">${getItem(item.id).price * item.amount}</div>
+              </div>
+              <hr />
+            </div>
+          ))}
+          <div className="flex justify-between p-2">
+            <div className="font-bold">Clear</div>
+            <div className="font-bold">${total}</div>
           </div>
         </div>
       </Popover.Panel>
-    </Popover>
+    </Popover >
   );
 }

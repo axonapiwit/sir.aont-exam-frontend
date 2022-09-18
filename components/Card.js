@@ -1,7 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-export default function Card({ title, image, price, rate, category }) {
+import React from "react";
+
+export default function Card({ title, image, price, rate, category, onClick }) {
   return (
-    <div className="w-full max-w-sm bg-white rounded-lg shadow-md border duration-150 origin-center hover:rotate-6">
+    <div className="w-full max-w-sm bg-white rounded-lg shadow-md border duration-150 origin-center hover:scale-105">
       <div className="space-x-4 space-y-6">
         <div className="img-product h-[300px] w-full  rounded-t-lg bg-white p-3">
           <img src={image} alt="" className="h-full w-full object-contain" />
@@ -29,7 +31,7 @@ export default function Card({ title, image, price, rate, category }) {
             <span className="price-product text-3xl font-bold text-gray-900">
               {"$ " + price}
             </span>
-            <button className="text-white bg-blue-700 rounded-lg px-5 py-2.5 hover:bg-blue-800 transition duration-150 ease-in-out hover:scale-105">
+            <button onClick={onClick} className="text-white bg-blue-700 rounded-lg px-5 py-2.5 hover:bg-blue-800 transition duration-150 ease-in-out hover:scale-105">
               Add to Cart
             </button>
           </div>

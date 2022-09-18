@@ -3,7 +3,7 @@
 import React from "react";
 import Dropdown from "./Dropdown";
 
-export default function Navbar({ onClickCategory }) {
+export default function Navbar({data, cart, addToCart, removeFromCart }) {
   return (
     <header className="left-0 top-0 fixed w-full bg-slate-600 border-gray-200 px-2 py-2.5 z-20">
       <div className="container flex flex-wrap justify-between items-center mx-auto">
@@ -19,7 +19,7 @@ export default function Navbar({ onClickCategory }) {
         >
           <ul className="w-full flex space-x-10">
             <li>
-              <Dropdown onClickCategory={onClickCategory} />
+              <Dropdown data={data} cart={cart} addToCart={addToCart} removeFromCart={removeFromCart}/>
             </li>
           </ul>
         </div>
